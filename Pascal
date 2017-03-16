@@ -1,0 +1,229 @@
+{
+    $Id: gplunit.pt,v 1.2 2002/09/07 15:40:47 peter Exp 2016/10/21 22:06:58 peter Exp $
+    This file is part of
+    Copyright (c) 2016 by huangwentao--jzoj
+
+
+
+    See the file COPYING.FPC, included in this distribution,
+    for details about the copyright.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+ **********************************************************************}
+unit math4;
+
+interface
+
+uses math;
+const maxsize=999999;
+type
+        arr=array[1..maxsize] of longint;
+        stacks=record
+                data:array[1..maxsize] of longint;
+                top:longint;
+        end;
+        sqlist:record
+
+
+        function ss (n:longint):boolean;
+        function jc (n:longint):int64;
+        function gys (n,m:longint):longint;
+        function gbs (n,m:longint):longint;
+        function zm (a,b:real):real;
+        function zz (a,b:real):real;
+        function sm (a,h:real):real;
+        function hl (a,b,c:real):real;
+        procedure zys (n:longint);
+        procedure fj (n:longint);
+        procedure readarray (a:arr;size:longint);
+        procedure writearray(a:arr;size:longint);
+implementation
+        {-------------------------------------------}
+        function ss (n:longint):boolean;
+var
+        i,k:longint;
+begin
+        k:=n;
+        for i:=1 to trunc(sqrt(k)) do
+        if k mod i=0 then begin
+                                ss:=false;
+                                break;
+                          end
+        else ss:=true
+end;
+{--------------------------------------------}
+function jc (n:longint):int64;
+var
+        i,k:longint;
+begin
+        k:=1;
+        for i:=1 to n do
+                k:=k*i;
+        jc:=k;
+end;
+{---------------------------------------------}
+function gys (n,m:longint):longint;
+var
+        i,k,r:longint;
+begin
+        if n>m then begin
+                        i:=n;
+                        k:=m;
+                        repeat
+                        r:=i mod k;
+                        i:=k;
+                        k:=r;
+                        until r=0;
+                        gys:=i;
+                     end
+        else begin
+                 i:=m;
+                 k:=n;
+                 repeat
+                        r:=i mod k;
+                        i:=k;
+                        k:=r;
+                 until r=0;
+                 gys:=i;
+              end;
+end;
+{---------------------------------------------}
+function gbs (n,m:longint):longint;
+var
+        i,k,r,z:longint;
+begin
+        z:=z*n;
+        if n>m then begin
+                        i:=n;
+                        k:=m;
+                        repeat
+                        r:=i mod k;
+                        i:=k;
+                        k:=r;
+                        until r=0;
+                        gbs:=z div i;
+                     end
+        else begin
+                 i:=m;
+                 k:=n;
+                 repeat
+                        r:=i mod k;
+                        i:=k;
+                        k:=r;
+                 until r=0;
+                 gbs:=z div i;
+              end;
+end;
+{-----------------------------------------------}
+function cm (n,k:longint):longint;
+var
+        i,z:longint;
+begin
+        z:=1;
+        for i:=1 to k do
+                z:=z*n;
+        cm:=z;
+end;
+{-------------------------------------------------}
+procedure zys (n:longint);
+var
+        i,j,k,m:longint;
+        a:array[1..100000] of longint;
+        bz:boolean;
+begin
+        bz:=true;
+        for i:=2 to trunc(sqrt(n)) do
+                if n mod i=0 then
+                        bz:=false;
+        if bz then begin
+                writeln(n,'=',n);
+                exit;
+        end;
+        write(n,'=');
+        j:=2;
+        repeat
+                if n mod j<>0 then inc(j)
+                else begin
+                        if n<>j then write(j,'*')
+                        else   write(j);
+                        n:=n div j;
+                end;
+        until n=1;
+end;
+{---------------------------------------------------}
+procedure fj (n:longint);
+var
+   k:array[1..100]of longint;
+procedure print(x:longint);
+var
+   i:longint;
+begin
+   if x=1 then exit;
+   for i:=1 to x-1 do
+    write(k[i],'+');
+   writeln(k[x]);
+end;
+procedure fly(x,y,num:longint);
+var
+     i:longint;
+begin
+        if y=0 then
+        begin
+                print(num-1);
+                exit;
+        end;
+        for i:=x to y do
+        begin
+                if (y=i)or(i<=y*2) then
+                 begin
+                        k[num]:=i;
+                        fly(i,y-i,num+1);
+                 end;
+              end;
+        end;
+     begin
+        fly(1,n,1);
+     end;
+{---------------------------------------------------------}
+function zm (a,b:real):real;
+begin
+        zm:=a*b;
+end;
+{--------------------------------------------------------------}
+function zz (a,b:real):real;
+begin
+        zz:=(a*b)*2;
+end;
+{-------------------------------------------------------------}
+function sm (a,h:real):real;
+begin
+        sm:=a*h/2;
+end;
+{-----------------------------------------------------------}
+function hl (a,b,c:real):real;
+var
+        p:real;
+begin
+        p:=(a+b+c)/2;
+        hl:=sqrt(p*(p-a)*(p-b)*(p-c));
+end;
+{------------------------------------------------}
+procedure readarray(a:arr;size:longint);
+var
+        i:longint;
+begin
+        for i:=1 to size do
+                read(a[i]);
+end;
+{------------------------------------------------}
+procedure writearray (a:arr;size:longint);
+var
+        i:longint;
+begin
+        for i:=1 to size do
+                write(a[i],' ');
+end;
+end.
